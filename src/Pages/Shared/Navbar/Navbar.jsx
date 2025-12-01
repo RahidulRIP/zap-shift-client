@@ -1,5 +1,7 @@
 import { Link, NavLink } from "react-router";
 import Logo from "../../../Components/Logo/Logo";
+import { FaArrowUp } from "react-icons/fa";
+import useAuth from "../../../hooks/useAuth";
 
 const Navbar = () => {
   // Services
@@ -10,6 +12,10 @@ const Navbar = () => {
   // Contact
   // Sign In
   // Sign Up
+
+  const { user, signUserOut } = useAuth();
+  console.log(user);
+
   const links = (
     <>
       <li>
@@ -20,6 +26,16 @@ const Navbar = () => {
       </li>
     </>
   );
+
+  const handleSignOutUser = () => {
+    signUserOut()
+      .then(() => {
+        // signOut
+      })
+      .catch(() => {
+        // An error happened.
+      });
+  };
   return (
     <div>
       <div className="navbar bg-base-100 shadow-sm md:rounded-2xl">
@@ -33,13 +49,12 @@ const Navbar = () => {
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >
-                {" "}
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth="2"
                   d="M4 6h16M4 12h8m-8 6h16"
-                />{" "}
+                />
               </svg>
             </div>
             <ul
@@ -55,7 +70,32 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1">{links}</ul>
         </div>
         <div className="navbar-end">
-          <a className="btn">Button</a>
+          <div className="flex items-center gap-2 md:gap-4 ">
+            {user ? (
+              <button
+                onClick={handleSignOutUser}
+                className="border border-[#DADADA] rounded-xl font-bold text-lg px-2.5 py-1.5 md:px-8 md:py-3"
+              >
+                Sign out
+              </button>
+            ) : (
+              <NavLink
+                to={"/login"}
+                className="border border-[#DADADA] rounded-xl font-bold text-lg px-2.5 py-1.5 md:px-8 md:py-3"
+              >
+                Sign in
+              </NavLink>
+            )}
+
+            <div className="flex items-center">
+              <NavLink className="border border-[#DADADA]  bg-primary font-bold rounded-xl text-lg  px-1.5 py-1.5 md:px-8 md:py-3 ">
+                Be a Rider
+              </NavLink>
+              <span className="md:w-13 md:h-13 w-8 h-8 bg-black text-white rounded-full flex items-center justify-center">
+                <FaArrowUp size={22} className="rotate-45 text-primary" />
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
