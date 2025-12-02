@@ -8,7 +8,7 @@ import useAuth from "../../hooks/useAuth";
 const SendParcel = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
-  console.log(user);
+  // console.log(user);
   const {
     register,
     handleSubmit,
@@ -21,6 +21,7 @@ const SendParcel = () => {
   const regions = [...new Set(regionsDuplicate)];
   const senderWatchRegion = useWatch({ name: "senderRegion", control });
   const receiverWatchRegion = useWatch({ name: "receiverRegion", control });
+  const watchParcelType = useWatch({ name: "parcelType", control });
 
   const districtsByRegion = (region) => {
     const regionDistricts = serviceCenters.filter((c) => c.region === region);
@@ -29,10 +30,9 @@ const SendParcel = () => {
   };
 
   const handleParcelSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
     const isDocument = data.parcelType === "document";
-    const isSameDistrict = data.senderDistrict == data.receiverDistrict;
-    console.log(isSameDistrict);
+    const isSameDistrict = data.senderDistrict === data.receiverDistrict;
     const parcelWeight = parseFloat(data.parcelWeight);
     let cost = 0;
     if (isDocument) {
@@ -47,7 +47,10 @@ const SendParcel = () => {
       }
     }
 
-    console.log(cost);
+    // console.log(cost);
+
+    // add cost in the the data
+    data.cost = cost;
 
     Swal.fire({
       title: "Agree with the Cost?",
@@ -101,7 +104,6 @@ const SendParcel = () => {
                 {...register("parcelType", { required: true })}
                 className="radio"
                 value="non-document"
-                defaultChecked
               />
               <FaRegFileAlt className="text-primary" /> Non-Document
             </label>
@@ -124,20 +126,23 @@ const SendParcel = () => {
               )}
             </div>
 
-            <div>
-              <label className="font-medium text-gray-700 mb-1 block">
-                Parcel Weight (KG)
-              </label>
-              <input
-                type="number"
-                placeholder="Weight in KG"
-                className="input input-bordered w-full"
-                {...register("parcelWeight", { required: true })}
-              />
-              {errors.parcelWeight && (
-                <p className="text-red-500 text-sm">Required</p>
-              )}
-            </div>
+            {watchParcelType === "non-document" && (
+              <div>
+                <label className="font-medium text-gray-700 mb-1 block">
+                  Parcel Weight (KG)
+                </label>
+                <input
+                  type="number"
+                  placeholder="Weight in KG"
+                  className="input input-bordered w-full"
+                  {...register("parcelWeight", { required: true })}
+                />
+
+                {errors.parcelWeight && (
+                  <p className="text-red-500 text-sm">Required</p>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Sender & Receiver */}
@@ -159,6 +164,7 @@ const SendParcel = () => {
                     className="input input-bordered w-full"
                     {...register("senderName", { required: true })}
                     defaultValue={user?.displayName}
+                    readOnly
                   />
                   {errors.senderName && (
                     <p className="text-red-500 text-sm">Required</p>
@@ -175,6 +181,7 @@ const SendParcel = () => {
                     className="input input-bordered w-full"
                     {...register("senderEmail", { required: true })}
                     defaultValue={user?.email}
+                    readOnly
                   />
                   {errors.senderName && (
                     <p className="text-red-500 text-sm">Required</p>
