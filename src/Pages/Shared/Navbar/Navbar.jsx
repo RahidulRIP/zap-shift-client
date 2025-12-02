@@ -4,17 +4,8 @@ import { FaArrowUp } from "react-icons/fa";
 import useAuth from "../../../hooks/useAuth";
 
 const Navbar = () => {
-  // Services
-  // Coverage
-  // About Us
-  // Pricing
-  // Blog
-  // Contact
-  // Sign In
-  // Sign Up
-
   const { user, signUserOut } = useAuth();
-  console.log(user);
+  // console.log(user);
 
   const links = (
     <>
@@ -24,6 +15,14 @@ const Navbar = () => {
       <li>
         <NavLink to={"/coverage"}>Coverage</NavLink>
       </li>
+      <li>
+        <NavLink to={"/send-parcel"}>Send Parcel</NavLink>
+      </li>
+      {user && (
+        <li>
+          <NavLink to={"/dashboard/my-parcels"}>My Parcels</NavLink>
+        </li>
+      )}
     </>
   );
 
@@ -88,7 +87,10 @@ const Navbar = () => {
             )}
 
             <div className="flex items-center">
-              <NavLink className="border border-[#DADADA]  bg-primary font-bold rounded-xl text-lg  px-1.5 py-1.5 md:px-8 md:py-3 ">
+              <NavLink
+                to={"/rider"}
+                className="border border-[#DADADA]  bg-primary font-bold rounded-xl text-lg  px-1.5 py-1.5 md:px-8 md:py-3 "
+              >
                 Be a Rider
               </NavLink>
               <span className="md:w-13 md:h-13 w-8 h-8 bg-black text-white rounded-full flex items-center justify-center">

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { FiLock, FiMail } from "react-icons/fi";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../../hooks/useAuth";
 import SocialGoogleLogin from "../SocialLogin/SocialGoogleLogin";
 
@@ -10,6 +10,9 @@ const Login = () => {
   const [eyes, setEyes] = useState(false);
   const [error, setError] = useState("");
   const { signInUser } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  // console.log(location);
 
   const {
     register,
@@ -22,6 +25,7 @@ const Login = () => {
     signInUser(data?.email, data?.password)
       .then((result) => {
         console.log(result);
+        navigate(location?.state || "/");
       })
       .catch((err) => {
         setError(err.message);
@@ -101,13 +105,14 @@ const Login = () => {
           </form>
           {/* google sign in */}
           <div>
-            <SocialGoogleLogin/>
+            <SocialGoogleLogin linkTOGo={location?.state} />
           </div>
           <h2>
             Have an account? Please{" "}
             <Link
               to={"/register"}
               className=" btn-link tex-lg font-medium text-accent"
+              state={location?.state}
             >
               Sign Up
             </Link>

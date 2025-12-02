@@ -3,12 +3,12 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { FiImage, FiLock, FiMail, FiUser } from "react-icons/fi";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../../hooks/useAuth";
 import SocialGoogleLogin from "../SocialLogin/SocialGoogleLogin";
 
 const Register = () => {
-  const { createUser } = useAuth();
+  const { createUser, updateUserProfile } = useAuth();
   const [eyes, setEyes] = useState(false);
   const [error, setError] = useState("");
   const {
@@ -16,32 +16,48 @@ const Register = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const navigate = useNavigate();
+  const location = useLocation();
+  // console.log(location);
 
-  const handleRegister = async (data) => {
-    console.log(data);
+  const handleRegister = (data) => {
+    // console.log(data);
     // register a user
     createUser(data?.email, data?.password)
-      .then((result) => {
-        console.log(result.user);
+      .then(() => {
+        // console.log(result.user);
+
+        // upload photo using api in imgBB start
+        const file = data.photo[0];
+        const formData = new FormData();
+        formData.append("image", file);
+        const apiKey = import.meta.env.VITE_ImgBB_api;
+        const url = `https://api.imgbb.com/1/upload?key=${apiKey}`;
+        try {
+          axios.post(url, formData).then((res) => {
+            const imgURL = res?.data?.data?.display_url;
+            const profile = {
+              displayName: data?.name,
+              photoURL: imgURL,
+            };
+
+            // update user profile
+            updateUserProfile(profile)
+              .then(() => {
+                navigate(location?.state || "/");
+              })
+              .catch((err) => {
+                setError(err.message);
+              });
+          });
+        } catch (err) {
+          console.log(err);
+        }
+        // upload photo using api in imgBB end
       })
       .catch((err) => {
         setError(err.message);
       });
-
-    // upload photo using api in imgBB start
-    const file = data.photo[0];
-    const formData = new FormData();
-    formData.append("image", file);
-    const apiKey = "a0634517e30e9d9a5cfeb09f89d2090a";
-    const url = `https://api.imgbb.com/1/upload?key=${apiKey}`;
-    try {
-      const res = await axios.post(url, formData);
-      const uploadedImg = res?.data?.data?.url;
-      console.log(uploadedImg);
-    } catch (err) {
-      console.log(err);
-    }
-    // upload photo using api in imgBB end
   };
   return (
     <div className="flex items-center justify-center my-12 md:my-28 p-3.5">
