@@ -5,6 +5,7 @@ import { RiDeleteBin5Fill } from "react-icons/ri";
 import { FiSearch } from "react-icons/fi";
 import { BiEdit } from "react-icons/bi";
 import Swal from "sweetalert2";
+import { Link } from "react-router";
 
 const MyParcels = () => {
   const axiosSecure = useAxiosSecure();
@@ -16,7 +17,7 @@ const MyParcels = () => {
       return res.data;
     },
   });
-  console.log(parcels);
+  // console.log(parcels);
   const handleDeleteParcels = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -28,7 +29,7 @@ const MyParcels = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosSecure.delete(`/parcels/${id}`).then((res) => {
+        axiosSecure.delete(`/parcel/${id}`).then((res) => {
           if (res.data.deletedCount) {
             refetch();
             Swal.fire({
@@ -51,9 +52,11 @@ const MyParcels = () => {
           <thead>
             <tr>
               <th></th>
-              <th>Name</th>
+              <th>Sender Name</th>
+              <th>Parcel Name</th>
               <th>Cost</th>
-              <th>Payment Status</th>
+              <th>Payment</th>
+              <th>Delivery Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -61,9 +64,24 @@ const MyParcels = () => {
             {parcels.map((parcel, i) => (
               <tr key={i}>
                 <th>{i + 1}</th>
+                <td>{parcel?.senderName}</td>
                 <td>{parcel?.parcelName}</td>
                 <td>{parcel?.cost}</td>
-                <td>Blue</td>
+                <td>
+                  {parcel?.deliveryStatus === "paid" ? (
+                    <span className="text-green-500">Paid</span>
+                  ) : (
+                    <Link
+                      to={`/dashboard/payment/${parcel?._id}`}
+                      className="btn btn-primary btn-sm text-black"
+                    >
+                      Pay
+                    </Link>
+                  )}
+                </td>
+                <td>
+                <span className="text-blue-500">Pending</span>
+                </td>
                 <td className="space-x-1.5">
                   <button className="btn btn-square">
                     <FiSearch size={20} />

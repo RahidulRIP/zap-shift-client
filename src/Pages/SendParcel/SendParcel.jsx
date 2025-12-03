@@ -65,9 +65,11 @@ const SendParcel = () => {
         axiosSecure.post("/parcels", data).then((res) => {
           if (res.data.insertedId) {
             Swal.fire({
-              title: "Deleted!",
-              text: "Your file has been deleted.",
+              position: "top-end",
               icon: "success",
+              title: "Successful!",
+              showConfirmButton: false,
+              timer: 1500,
             });
           }
         });
