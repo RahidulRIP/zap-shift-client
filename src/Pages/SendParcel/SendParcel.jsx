@@ -1,12 +1,13 @@
 import { useForm, useWatch } from "react-hook-form";
 import { FaRegFileAlt, FaRegFile } from "react-icons/fa";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 
 const SendParcel = () => {
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
   const { user } = useAuth();
   // console.log(user);
   const {
@@ -64,6 +65,7 @@ const SendParcel = () => {
       if (result.isConfirmed) {
         axiosSecure.post("/parcels", data).then((res) => {
           if (res.data.insertedId) {
+            navigate('/dashboard/my-parcels')
             Swal.fire({
               position: "top-end",
               icon: "success",

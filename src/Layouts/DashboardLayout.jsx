@@ -1,8 +1,8 @@
 import { FaBox } from "react-icons/fa";
-import { FiHome, FiMenu, FiSettings } from "react-icons/fi";
-import { RiGitMergeFill } from "react-icons/ri";
+import { FiHome, FiSettings } from "react-icons/fi";
 import { TbLayoutSidebarLeftExpandFilled } from "react-icons/tb";
 import { Link, NavLink, Outlet } from "react-router";
+import { IoCardSharp } from "react-icons/io5";
 
 const DashboardLayout = () => {
   return (
@@ -18,7 +18,7 @@ const DashboardLayout = () => {
               className="btn btn-square btn-ghost"
             >
               {/* Sidebar toggle icon */}
-          <TbLayoutSidebarLeftExpandFilled size={16}/>
+              <TbLayoutSidebarLeftExpandFilled size={16} />
             </label>
             <div className="px-4">Navbar Title</div>
           </nav>
@@ -75,6 +75,23 @@ const DashboardLayout = () => {
                     className="is-drawer-close:hidden"
                   >
                     My Parcels
+                  </NavLink>
+                </button>
+              </li>
+
+              {/* List item 4*/}
+              <li>
+                <button
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  data-tip="Settings"
+                >
+                  {/*icon */}
+                  <IoCardSharp size={18} />
+                  <NavLink
+                    to={"/dashboard/payments-history"}
+                    className="is-drawer-close:hidden"
+                  >
+                    My Payments History
                   </NavLink>
                 </button>
               </li>
