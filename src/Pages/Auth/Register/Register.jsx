@@ -6,11 +6,13 @@ import { FiImage, FiLock, FiMail, FiUser } from "react-icons/fi";
 import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../../hooks/useAuth";
 import SocialGoogleLogin from "../SocialLogin/SocialGoogleLogin";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const Register = () => {
   const { createUser, updateUserProfile } = useAuth();
   const [eyes, setEyes] = useState(false);
   const [error, setError] = useState("");
+  const axiosSecure = useAxiosSecure();
   const {
     register,
     handleSubmit,
@@ -36,6 +38,15 @@ const Register = () => {
         try {
           axios.post(url, formData).then((res) => {
             const imgURL = res?.data?.data?.display_url;
+            const userInfo = {
+              email: data?.email,
+              displayName: data?.name,
+              photoURL: imgURL,
+            };
+            axiosSecure
+              .post("/users", userInfo)
+              .then((res) => console.log(res.data));
+
             const profile = {
               displayName: data?.name,
               photoURL: imgURL,

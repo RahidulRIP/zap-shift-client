@@ -64,36 +64,30 @@ const DashboardLayout = () => {
 
               {/* List item 3*/}
               <li>
-                <button
+                <NavLink
+                  to={"/dashboard/my-parcels"}
                   className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                  data-tip="Settings"
+                  data-tip="my-parcels"
                 >
                   {/*icon */}
                   <FaBox size={17} />
-                  <NavLink
-                    to={"/dashboard/my-parcels"}
-                    className="is-drawer-close:hidden"
-                  >
-                    My Parcels
-                  </NavLink>
-                </button>
+                  <span className="is-drawer-close:hidden">My Parcels</span>
+                </NavLink>
               </li>
 
               {/* List item 4*/}
               <li>
-                <button
+                <NavLink
+                  to={"/dashboard/payments-history"}
                   className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                  data-tip="Settings"
+                  data-tip="payments-history"
                 >
                   {/*icon */}
                   <IoCardSharp size={18} />
-                  <NavLink
-                    to={"/dashboard/payments-history"}
-                    className="is-drawer-close:hidden"
-                  >
+                  <span className="is-drawer-close:hidden">
                     My Payments History
-                  </NavLink>
-                </button>
+                  </span>
+                </NavLink>
               </li>
             </ul>
           </div>

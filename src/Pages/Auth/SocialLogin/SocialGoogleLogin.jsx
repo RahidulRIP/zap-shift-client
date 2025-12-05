@@ -1,15 +1,28 @@
 import { FcGoogle } from "react-icons/fc";
 import useAuth from "../../../hooks/useAuth";
 import { useNavigate } from "react-router";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const SocialGoogleLogin = ({ linkTOGo }) => {
   const navigate = useNavigate();
   const { googleSignIn } = useAuth();
+  const axiosSecure = useAxiosSecure();
+
   const handleGoogleLogin = () => {
     googleSignIn()
-      .then(() => {
-        // console.log(result.user);
-        navigate(linkTOGo || "/");
+      .then((result) => {
+        const userInfo = {
+          email: result?.user?.email,
+          displayName: result?.user?.displayName,
+          photoURL: result?.user?.photoURL,
+        };
+        axiosSecure.post("/users", userInfo).then((res) => {
+          console.log(res.data);
+          if (res?.data?.insertedId) {
+            // post successful
+          }
+          navigate(linkTOGo || "/");
+        });
       })
       .catch((err) => {
         console.log(err);

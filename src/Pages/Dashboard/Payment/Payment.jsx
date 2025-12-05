@@ -7,6 +7,7 @@ const Payment = () => {
   const { parcelId } = useParams();
   const axiosSecure = useAxiosSecure();
 
+  // getting parcel data
   const { isLoading, data: parcel = {} } = useQuery({
     queryKey: [parcelId],
     queryFn: async () => {
@@ -16,6 +17,7 @@ const Payment = () => {
   });
   console.log(parcel);
 
+  // stripe payment 
   const handlePayment = async () => {
     const paymentInfo = {
       cost: parcel?.cost,
