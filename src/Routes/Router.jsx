@@ -32,18 +32,19 @@ const router = createBrowserRouter([
         loader: () => fetch("warehouses.json").then((res) => res.json()),
       },
       {
-        path: "rider",
-        element: (
-          <PrivateRoute>
-            <Rider />
-          </PrivateRoute>
-        ),
-      },
-      {
         path: "send-parcel",
         element: (
           <PrivateRoute>
             <SendParcel />
+          </PrivateRoute>
+        ),
+        loader: () => fetch("warehouses.json").then((res) => res.json()),
+      },
+      {
+        path: "rider",
+        element: (
+          <PrivateRoute>
+            <Rider />
           </PrivateRoute>
         ),
         loader: () => fetch("warehouses.json").then((res) => res.json()),

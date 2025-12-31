@@ -1,16 +1,41 @@
-# React + Vite
+# ZAPSHIFT – On-Demand Parcel Delivery System 📦
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+ZAPSHIFT is a modern web-based courier platform that simplifies logistics. Users can schedule a parcel pickup from their location, and an available rider is dispatched to collect and deliver it to the final destination.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🎯 Purpose
+The goal of this project is to automate the delivery process. It removes the need for manual phone calls by providing a digital interface where users, riders, and admins can track the lifecycle of a parcel from pickup to delivery.
 
-## React Compiler
+## ✨ Key Features
+- **User Booking:** Easily request a parcel pickup by providing sender/receiver details and parcel type.
+- **Rider Dispatch:** Automated or Admin-assigned pickup requests for nearby riders.
+- **Role-Based Access:** - **User:** Book parcels and track their status.
+  - **Rider:** View assigned pickups and mark parcels as "Delivered."
+  - **Admin:** Manage users, riders, and oversee all system logistics.
+- **Real-Time Tracking:** Monitor whether a parcel is "Pending," "On the Way," or "Delivered."
+- **Secure Authentication:** Firebase-powered login for all user roles.
+- **Interactive UI:** Smooth transitions with Framer Motion and a clean dashboard using DaisyUI.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Tech Stack
+- **Frontend:** React.js, React Router, Tailwind CSS, DaisyUI
+- **Backend:** Node.js, Express.js
+- **Database:** MongoDB
+- **Animations:** Framer Motion
+- **Auth & Hosting:** Firebase
 
-## Expanding the ESLint configuration
+## 📦 NPM Packages Used
+# Frontend
+- `react`, `react-router-dom` (Core)
+- `firebase` (Authentication)
+- `axios` (API requests)
+- `framer-motion` (UI Animations)
+- `react-icons` (Visuals)
+- `react-hot-toast` (Notifications)
+- `swiper` (Dynamic Sliders)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# Backend
+- `express`, `mongoose` (Server & DB)
+- `cors`, `dotenv` (Security & Config)
+- `jsonwebtoken` (Security)
+
+

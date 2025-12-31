@@ -19,10 +19,16 @@ const Navbar = () => {
         <NavLink to={"/send-parcel"}>Send Parcel</NavLink>
       </li>
       {user && (
-        <li>
-          <NavLink to={"/dashboard/my-parcels"}>My Parcels</NavLink>
-        </li>
+        <>
+          <li>
+            <NavLink to={"/dashboard/my-parcels"}>My Parcels</NavLink>
+          </li>
+        </>
       )}
+
+      <li>
+        <NavLink to={"/rider"}>Be a Rider</NavLink>
+      </li>
     </>
   );
 
